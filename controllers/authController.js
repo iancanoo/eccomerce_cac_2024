@@ -3,22 +3,33 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import users from "../models/userModel.js";
+import conexion from "../DB/db.js";
 import configs from "../config/config.js";
+import promisefy from "util";
 
-export const register = (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = bcrypt.hashSync(password, 8);
+//Registro
+// export const register = (req, res) => {
+//   const { username, password } = req.body;
+//   console.log(username + " - " + password);
 
-  const newUser = { id: users.length + 1, username, password: hashedPassword };
-  users.push(newUser);
+//   // const hashedPassword = bcrypt.hashSync(password, 8);
 
-  const token = jwt.sign({ id: newUser.id }, configs.secretKey, {
-    expiresIn: configs.tokenExpiresIn,
-  });
+//   // const newUser = { id: users.length + 1, username, password: hashedPassword };
+//   // users.push(newUser);
 
-  res.status(201).send({ auth: true, token });
+//   // const token = jwt.sign({ id: newUser.id }, configs.secretKey, {
+//   //   expiresIn: configs.tokenExpiresIn,
+//   // });
+
+//   // res.status(201).send({ auth: true, token });
+// };
+export const register = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log(username + " - " + password);
 };
 
+//Login
 export const login = (req, res) => {
   const { username, password } = req.body;
 

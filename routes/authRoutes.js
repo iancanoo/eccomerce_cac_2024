@@ -1,15 +1,22 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
-import conexion from "../DB/db.js";
 
 const router = express.Router();
 
+//Router para controlador
 router.post("/register", register);
 router.post("/login", login);
+
+//Router para las vistas
 router.get("/", (req, res) => {
-  conexion();
   res.render("index");
+});
+router.get("/register", (req, res) => {
+  res.render("register");
+});
+router.get("/login", (req, res) => {
+  res.render("login");
 });
 
 router.get("/admin", authMiddleware, (req, res) => {
