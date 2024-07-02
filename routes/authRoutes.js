@@ -1,6 +1,7 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import conexion from "../DB/db.js";
 
 const router = express.Router();
 
@@ -20,7 +21,26 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/admin", authMiddleware, (req, res) => {
-  res.status(200).send(`Bienvenido ${req.userId}`);
+  const userId = req.userId;
+
+  // Consulta para obtener el nombre de usuario asociado con el userId
+  conexion.query(
+    "SELECT usuario FROM admins WHERE id_admin = ?",
+    [userId],
+    (error, results) => {
+      if (error) {
+        console.error("Error al consultar la base de datos:", error);
+        return res.status(500).send("Error al obtener el nombre de usuario");
+      }
+
+      if (results.length === 0) {
+        return res.status(404).send("Usuario no encontrado");
+      }
+
+      const username = results[0].username;
+      res.status(200).send(`Hola ${username}`);
+    }
+  );
 });
 
 export default router;

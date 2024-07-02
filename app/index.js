@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //seteamos la carpeta public
-// app.use(express.static("public"));
+app.use(express.static("public"));
 
 //conexion con front
 app.use(

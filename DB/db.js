@@ -24,10 +24,10 @@ pool
   })
   .catch((error) => {
     console.log("Error connect to the database", error);
-    console.log("DB_HOST:", process.env.DB_HOST);
-    console.log("DB_USER:", process.env.DB_USER);
-    console.log("DB_PASS:", process.env.DB_PASS);
-    console.log("DB_DATABASE:", process.env.DB_DATABASE);
+    // console.log("DB_HOST:", process.env.DB_HOST);
+    // console.log("DB_USER:", process.env.DB_USER);
+    // console.log("DB_PASS:", process.env.DB_PASS);
+    // console.log("DB_DATABASE:", process.env.DB_DATABASE);
   });
 
 export default pool;
