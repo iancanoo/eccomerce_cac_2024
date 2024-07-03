@@ -4,13 +4,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import conexion from "../DB/db.js";
 import configs from "../config/config.js";
-import promisefy from "util";
 
 //Registro
-export const register = async (req, res) => {
+export const register = (req, res) => {
   try {
     const { username, password } = req.body;
-    let hashedPassword = await bcrypt.hashSync(password, 8);
+    let hashedPassword = bcrypt.hashSync(password, 8);
     // console.log(hashedPassword);
     conexion.query(
       "INSERT INTO admins SET ?",
@@ -20,8 +19,7 @@ export const register = async (req, res) => {
       },
       (error, results) => {
         if (error) {
-          console.log(`Error: ${error}`);
-          // res.redirect("/login");
+          return res.status(500).send("Error registering user.");
         }
         const token = jwt.sign({ id: results.insertId }, configs.secretKey, {
           expiresIn: configs.tokenExpiresIn,
@@ -29,11 +27,6 @@ export const register = async (req, res) => {
         res.status(201).send({ auth: true, token });
       }
     );
-
-    // const token = jwt.sign({ id: newUser.id }, configs.secretKey, {
-    //   expiresIn: configs.tokenExpiresIn,
-    // });
-    // res.status(201).send({ auth: true, token });
   } catch (error) {
     console.log(error);
   }

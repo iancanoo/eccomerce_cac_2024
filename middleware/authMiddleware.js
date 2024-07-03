@@ -14,7 +14,7 @@ const authMiddleware = (req, res, next) => {
         .status(500)
         .send({ auth: false, message: "Failed to authenticate token." });
 
-    req.id_admin = decoded.id;
+    req.id = decoded.id;
     next();
     console.log(err);
   });

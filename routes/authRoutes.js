@@ -1,5 +1,6 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
+import * as product from "../controllers/productController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import conexion from "../DB/db.js";
 
@@ -42,5 +43,12 @@ router.get("/admin", authMiddleware, (req, res) => {
     }
   );
 });
+
+//Rutas de productos
+router.post("/productos", product.createProduct);
+router.get("/productos", product.getProducts);
+router.get("/producto/:id", product.getProduct);
+router.put("/producto/:id", product.updateProduct);
+router.delete("/producto/:id", product.deleteProduct);
 
 export default router;
