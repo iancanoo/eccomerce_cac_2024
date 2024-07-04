@@ -1,6 +1,8 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
 import * as product from "../controllers/productController.js";
+import * as categorie from "../controllers/categorieController.js";
+import * as promo from "../controllers/promosController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import conexion from "../DB/db.js";
 
@@ -50,5 +52,17 @@ router.get("/productos", product.getProducts);
 router.get("/producto/:id", product.getProduct);
 router.put("/producto/:id", product.updateProduct);
 router.delete("/producto/:id", product.deleteProduct);
+
+//Rutas de categorias
+router.post("/categorias", categorie.createCategorias);
+router.get("/categorias", categorie.getCategorias);
+router.put("/categoria/:id", categorie.updateCategoria);
+router.delete("/categoria/:id", categorie.deleteCategoria);
+
+//Rutas de promos
+router.post("/promos", promo.createPromos);
+router.get("/promos", promo.getPromos);
+router.put("/promo/:id", promo.updatePromo);
+router.delete("/promo/:id", promo.deletePromo);
 
 export default router;
